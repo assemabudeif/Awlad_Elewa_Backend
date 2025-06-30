@@ -1,254 +1,421 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛒 Awlad Elewa E-Commerce Platform
+### Laravel Backend & Admin Panel with Mobile API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![Laravel](https://img.shields.io/badge/Laravel-11.x-red.svg)](https://laravel.com/)
+[![PHP](https://img.shields.io/badge/PHP-8.2+-blue.svg)](https://php.net/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![API](https://img.shields.io/badge/API-REST-orange.svg)](docs)
 
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-# Awlad Elewa - Laravel Backend & Admin Panel
-
-مشروع Laravel لـ backend و admin panel لتطبيق أولاد العلوى التجاري.
-
-## الميزات الجديدة - نظام الإشعارات
-
-### 🔔 نظام الإشعارات الكامل
-
-تم إضافة نظام إشعارات شامل يدعم Firebase Cloud Messaging (FCM) مع الميزات التالية:
-
-#### ميزات Admin Panel:
-- **إدارة الإشعارات**: إنشاء، تعديل، عرض وحذف الإشعارات
-- **أنواع الإرسال المختلفة**:
-  - جميع المستخدمين
-  - مستخدمون محددون
-  - متابعي فئات معينة
-- **جدولة الإشعارات**: إمكانية جدولة الإشعارات لإرسالها في وقت محدد
-- **رفع الصور**: إمكانية إرفاق صور مع الإشعارات
-- **إحصائيات الإرسال**: تتبع عدد المستخدمين الذين تم إرسال الإشعار إليهم
-
-#### ميزات API:
-- **تسجيل FCM Token**: `/api/fcm-token`
-- **إدارة إعدادات الإشعارات**: `/api/notifications/toggle`
-- **عرض تاريخ الإشعارات**: `/api/notifications`
-- **تحديد الإشعارات كمقروءة**: `/api/notifications/{id}/read`
-
-### 📱 API Endpoints للإشعارات
-
-#### تحديث FCM Token
-```http
-POST /api/fcm-token
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-    "fcm_token": "your_fcm_token_here"
-}
-```
-
-#### تبديل إعدادات الإشعارات
-```http
-POST /api/notifications/toggle
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-    "enabled": true
-}
-```
-
-#### الحصول على إعدادات الإشعارات
-```http
-GET /api/notifications/settings
-Authorization: Bearer {token}
-```
-
-#### عرض الإشعارات
-```http
-GET /api/notifications
-Authorization: Bearer {token}
-```
-
-#### تحديد إشعار كمقروء
-```http
-POST /api/notifications/{notification_id}/read
-Authorization: Bearer {token}
-```
-
-#### تحديد جميع الإشعارات كمقروءة
-```http
-POST /api/notifications/read-all
-Authorization: Bearer {token}
-```
-
-### ⚙️ الإعداد والتكوين
-
-#### 1. إعداد Firebase
-1. قم بإنشاء مشروع في Firebase Console
-2. أنشئ service account وحمل ملف JSON
-3. ضع الملف في `storage/app/public/`
-4. تأكد من تحديث مسار الملف في `config/services.php`
-
-#### 2. متغيرات البيئة
-```env
-FIREBASE_CREDENTIALS=storage/app/public/your-firebase-credentials.json
-FIREBASE_PROJECT_ID=your-project-id
-```
-
-#### 3. إعداد Cron Job للإشعارات المجدولة
-```bash
-# تشغيل في crontab
-* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
-```
-
-#### 4. تشغيل command يدوياً
-```bash
-php artisan notifications:send-scheduled
-```
-
-### 🗃️ جداول قاعدة البيانات الجديدة
-
-#### جدول `custom_notifications`
-- `title`: عنوان الإشعار
-- `body`: محتوى الإشعار
-- `image`: مسار الصورة (اختياري)
-- `type`: نوع الإرسال (all_users, specific_users, category_followers)
-- `sent_to`: JSON للمستخدمين أو الفئات المحددة
-- `sent_count`: عدد المستخدمين الذين تم الإرسال إليهم
-- `status`: حالة الإشعار (draft, scheduled, sent, failed)
-- `scheduled_at`: موعد الإرسال المجدول
-- `sent_at`: تاريخ الإرسال الفعلي
-
-#### إضافات جدول `users`
-- `fcm_token`: رمز FCM للمستخدم
-- `notifications_enabled`: تفعيل/إلغاء تفعيل الإشعارات
-
-### 🔧 الخدمات والمكونات
-
-#### `FCMService`
-خدمة للتعامل مع Firebase Cloud Messaging:
-- إرسال للجهاز الواحد
-- إرسال متعدد (حتى 500 جهاز)
-- إرسال للـ topics
-- الاشتراك/إلغاء الاشتراك في topics
-
-#### `NotificationController` (Admin)
-تحكم كامل في إدارة الإشعارات من لوحة الإدارة
-
-#### `NotificationController` (API)
-إدارة إعدادات الإشعارات وتاريخها للمستخدمين
-
-### 🎨 واجهة المستخدم
-
-تم إضافة صفحات جديدة في Admin Panel:
-- `/admin/notifications` - قائمة الإشعارات
-- `/admin/notifications/create` - إنشاء إشعار جديد
-- `/admin/notifications/{id}` - عرض تفاصيل الإشعار
-- `/admin/notifications/{id}/edit` - تعديل الإشعار
-
-### 📦 الحزم المستخدمة
-
-- `laravel-notification-channels/fcm` - للتعامل مع FCM
-- `kreait/firebase-php` - Firebase Admin SDK
-- `firebase/php-jwt` - للتوكنات
-
-### 🚀 الاستخدام السريع
-
-1. **إنشاء إشعار جديد**:
-   - ادخل على `/admin/notifications/create`
-   - املأ البيانات المطلوبة
-   - اختر نوع الإرسال
-   - احفظ أو أرسل فوراً
-
-2. **للتطبيق المحمول**:
-   - سجل FCM token عند تسجيل الدخول
-   - فعل الإشعارات من الإعدادات
-   - استقبل الإشعارات تلقائياً
+> **Professional E-Commerce Backend System** built with Laravel featuring comprehensive admin panel, mobile API, real-time notifications, and advanced business logic for commercial retail operations.
 
 ---
 
-## الميزات الأساسية (موجودة مسبقاً)
+## 📋 **Project Overview**
 
-- تسجيل الدخول والتسجيل للمستخدمين
-- إدارة المنتجات والفئات
-- إدارة الطلبات وطلبات الصيانة
-- إدارة البانرات والإعلانات
-- إدارة المستخدمين
-- إعدادات التطبيق
-- API شامل للتطبيق المحمول
+**Awlad Elewa** is a sophisticated e-commerce backend system designed for furniture and electronics retail business. The project demonstrates advanced Laravel development practices, modern API design, and enterprise-level architectural patterns.
 
-## التثبيت
+### 🎯 **Key Objectives**
+- Provide scalable backend infrastructure for mobile e-commerce applications
+- Implement comprehensive admin panel for business operations management
+- Deliver real-time notifications and communication systems
+- Ensure robust security and data integrity
+- Support multi-platform integration capabilities
 
-```bash
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-php artisan db:seed
-php artisan storage:link
+---
+
+## 🚀 **Core Features & Capabilities**
+
+### 🔐 **Authentication & Authorization**
+- **Laravel Sanctum** token-based authentication
+- **Spatie Permissions** role-based access control
+- **Multi-platform support** (Mobile & Web)
+- **Password reset** with email verification
+- **API rate limiting** and security middleware
+
+### 📱 **Mobile API (REST)**
+```php
+// Example API Response Structure
+{
+    "data": {
+        "user": { ... },
+        "products": [ ... ],
+        "pagination": { ... }
+    },
+    "message": "Success",
+    "status": "success"
+}
 ```
 
-## إعداد قاعدة البيانات
+### 🛍️ **E-Commerce Management**
+- **Product Catalog** with categories and media management
+- **Shopping Cart** with persistent sessions
+- **Order Management** with status tracking
+- **Repair Services** booking and management
+- **Wishlist** functionality
+- **Multi-payment** method support
 
-قم بتحديث ملف `.env` بإعدادات قاعدة البيانات وباقي الخدمات.
+### 🔔 **Advanced Notification System**
+- **Firebase Cloud Messaging (FCM)** integration
+- **Real-time notifications** for order updates
+- **Automated notifications** for business events
+- **Admin panel** for custom broadcasts
+- **Scheduled notifications** with queue system
 
-## Admin Panel
+### 🎛️ **Admin Panel Features**
+- **Dashboard** with analytics and insights
+- **Product Management** with image uploads
+- **Order Processing** with status workflows
+- **User Management** with role assignments
+- **Banner Management** for promotions
+- **Settings Configuration** for business logic
 
-يمكن الوصول للوحة الإدارة من خلال `/admin` بعد تسجيل الدخول كأدمن.
+---
 
-## API Documentation
+## 🏗️ **Technical Architecture**
 
-API endpoint متاح في `/docs` لمراجعة جميع endpoints المتاحة.
+### **Backend Framework**
+```
+Laravel 11.x
+├── PHP 8.2+
+├── MySQL Database
+├── Redis (Caching & Sessions)
+├── Queue Workers
+└── File Storage (Local/Cloud)
+```
+
+### **Key Technologies & Packages**
+
+| Technology | Purpose | Implementation |
+|------------|---------|----------------|
+| **Laravel Sanctum** | API Authentication | Mobile token management |
+| **Spatie Media Library** | File Management | Image uploads & processing |
+| **Spatie Permissions** | Authorization | Role-based access control |
+| **Firebase SDK** | Push Notifications | Real-time messaging |
+| **Laravel Queues** | Background Jobs | Scheduled notifications |
+| **Custom Middleware** | API Security | Rate limiting & validation |
+
+### **Database Schema Design**
+```sql
+-- Core Entities
+Users (Authentication & Profiles)
+├── Products (Catalog Management)
+├── Categories (Product Organization)
+├── Orders (Transaction Processing)
+├── OrderItems (Cart & Purchase Details)
+├── RepairOrders (Service Management)
+├── Notifications (Communication)
+└── Settings (Business Configuration)
+```
+
+---
+
+## 📡 **API Documentation**
+
+### **Authentication Endpoints**
+```bash
+POST   /api/auth/register     # User registration
+POST   /api/auth/login        # User authentication  
+POST   /api/auth/logout       # Session termination
+POST   /api/auth/forgot-password   # Password reset
+```
+
+### **E-Commerce Endpoints**
+```bash
+# Product Management
+GET    /api/products          # Product listing with filters
+GET    /api/products/{id}     # Product details
+GET    /api/categories        # Category tree structure
+
+# Shopping Cart
+GET    /api/cart              # Cart contents
+POST   /api/cart              # Add to cart
+PUT    /api/cart/{id}         # Update quantities
+DELETE /api/cart/{id}         # Remove items
+
+# Order Processing
+GET    /api/orders            # Order history
+POST   /api/orders            # Place new order
+GET    /api/orders/{id}       # Order details
+```
+
+### **Notification System**
+```bash
+POST   /api/fcm-token         # Register FCM token
+GET    /api/notifications     # Notification history
+POST   /api/notifications/toggle    # Enable/disable notifications
+POST   /api/notifications/{id}/read # Mark as read
+```
+
+---
+
+## 🔧 **Advanced Implementation Details**
+
+### **Service Layer Architecture**
+```php
+// NotificationService - Real-time communication
+class NotificationService 
+{
+    public function sendOrderCreatedNotification(Order $order)
+    public function sendOrderStatusChangedNotification(Order $order, $oldStatus, $newStatus)  
+    public function sendRepairOrderCreatedNotification(RepairOrder $repairOrder)
+    public function sendWelcomeNotification(User $user)
+    public function sendBroadcastNotification($title, $body, $image = null, $data = [])
+}
+
+// FCMService - Firebase integration
+class FCMService 
+{
+    public function sendToDevice(string $token, string $title, string $body)
+    public function sendToMultiple(array $tokens, string $title, string $body)
+    public function sendToTopic(string $topic, string $title, string $body)
+}
+```
+
+### **Automated Business Logic**
+```php
+// Automatic notification triggers
+Order::created()    → Welcome notification
+Order::updated()    → Status change notification  
+RepairOrder::created() → Service confirmation
+User::registered() → Welcome message (delayed)
+```
+
+### **Queue Management**
+```php
+// Scheduled notification processing
+Schedule::command('notifications:send-scheduled')->everyMinute();
+
+// Background job processing
+php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+```
+
+---
+
+## 🛠️ **Development & Deployment**
+
+### **Installation & Setup**
+```bash
+# Clone repository
+git clone https://github.com/username/awlad-elewa.git
+cd awlad-elewa
+
+# Install dependencies
+composer install
+npm install && npm run build
+
+# Environment configuration
+cp .env.example .env
+php artisan key:generate
+
+# Database setup
+php artisan migrate
+php artisan db:seed
+
+# Storage linking
+php artisan storage:link
+
+# Queue processing
+php artisan queue:work
+```
+
+### **Environment Configuration**
+```env
+# Database
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_DATABASE=awlad_elewa
+
+# Firebase (Notifications)
+FIREBASE_CREDENTIALS=storage/app/firebase-credentials.json
+FIREBASE_PROJECT_ID=awlad-elewa
+
+# Queue Configuration
+QUEUE_CONNECTION=database
+```
+
+### **Production Deployment**
+```bash
+# Optimization commands
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# Queue supervisor setup
+supervisor configuration for queue workers
+
+# Nginx/Apache configuration
+SSL termination and load balancing setup
+```
+
+---
+
+## 📊 **Performance & Monitoring**
+
+### **Optimization Strategies**
+- **Database Indexing** on frequently queried columns
+- **Eager Loading** to prevent N+1 queries
+- **Redis Caching** for session and application data
+- **Queue Workers** for background processing
+- **API Rate Limiting** to prevent abuse
+
+### **Monitoring & Logging**
+```php
+// Comprehensive logging
+Log::info("Order #{$order->id} created by user {$user->name}");
+Log::error("FCM notification failed: " . $exception->getMessage());
+
+// Performance tracking
+DB::enableQueryLog(); // Development monitoring
+```
+
+---
+
+## 🔒 **Security Implementation**
+
+### **API Security Measures**
+- **Token-based authentication** with expiration
+- **CORS configuration** for cross-origin requests
+- **Input validation** with Laravel Form Requests
+- **SQL injection prevention** through Eloquent ORM
+- **XSS protection** with automatic escaping
+
+### **Data Protection**
+```php
+// Sensitive data handling
+protected $hidden = ['password', 'remember_token', 'fcm_token'];
+protected $fillable = [...]; // Mass assignment protection
+
+// Encryption for sensitive operations
+Crypt::encrypt($sensitiveData);
+Hash::make($password);
+```
+
+---
+
+## 📱 **Mobile Integration**
+
+### **Response Format Standards**
+```json
+{
+    "data": {
+        "id": 1,
+        "name": "Product Name",
+        "price": "100.00",
+        "image": "https://domain.com/storage/products/image.jpg"
+    },
+    "message": "Operation successful",
+    "status": "success",
+    "pagination": {
+        "current_page": 1,
+        "total": 50,
+        "per_page": 15
+    }
+}
+```
+
+### **Error Handling**
+```json
+{
+    "message": "Validation failed", 
+    "errors": {
+        "email": ["The email field is required."]
+    },
+    "status": "error"
+}
+```
+
+---
+
+## 🎨 **Admin Panel Interface**
+
+### **Modern UI Features**
+- **Responsive Design** with Arabic RTL support
+- **Interactive Dashboard** with real-time metrics
+- **Advanced Forms** with validation feedback
+- **Image Management** with drag-and-drop uploads
+- **Notification Center** for system alerts
+
+### **Business Operations**
+- **Order Management** with status workflows
+- **Product Catalog** with category management
+- **User Administration** with role assignments  
+- **Analytics Dashboard** with sales insights
+- **Settings Panel** for business configuration
+
+---
+
+## 📈 **Scalability & Future Enhancements**
+
+### **Current Architecture Benefits**
+- **Microservice-ready** structure with service layers
+- **API-first approach** for multi-platform support
+- **Queue-based processing** for performance
+- **Modular design** for feature extensions
+
+### **Potential Enhancements**
+- **Elasticsearch** integration for advanced search
+- **Redis Pub/Sub** for real-time features
+- **Docker containerization** for deployment
+- **API versioning** for backward compatibility
+- **GraphQL endpoints** for flexible data fetching
+
+---
+
+## 🏆 **Technical Achievements**
+
+### **Backend Excellence**
+✅ **RESTful API Design** with consistent response patterns  
+✅ **Real-time Notifications** with Firebase integration  
+✅ **Automated Business Logic** with event-driven architecture  
+✅ **Advanced Security** implementation with multiple layers  
+✅ **Scalable Architecture** with service-oriented design  
+✅ **Queue Management** for background processing  
+✅ **Comprehensive Testing** capabilities built-in  
+
+### **Business Impact**
+✅ **Complete E-commerce Solution** from catalog to fulfillment  
+✅ **Multi-platform Support** for web and mobile applications  
+✅ **Real-time Communication** between customers and business  
+✅ **Automated Operations** reducing manual intervention  
+✅ **Analytics-ready** structure for business intelligence  
+
+---
+
+## 📞 **Technical Contact & Documentation**
+
+### **API Documentation**
+- **Swagger/OpenAPI** specification available
+- **Postman Collection** for testing
+- **Response examples** for all endpoints
+- **Error code references** for debugging
+
+### **Code Quality**
+- **PSR-12** coding standards compliance
+- **SOLID principles** implementation
+- **Design patterns** usage (Repository, Service, Observer)
+- **Comprehensive comments** and documentation
+
+---
+
+## 🎯 **Professional Summary**
+
+This project demonstrates advanced **Laravel development expertise** including:
+
+- **Enterprise-level architecture** design and implementation
+- **RESTful API development** with modern best practices  
+- **Real-time systems** integration with Firebase
+- **Database design** and optimization strategies
+- **Security implementation** and threat mitigation
+- **Performance optimization** and scalability planning
+- **Modern PHP practices** and framework mastery
+
+**Perfect for portfolios demonstrating full-stack backend development capabilities, API design expertise, and business logic implementation skills.**
+
+---
+
+### 📄 **License**
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+---
+
+**Built with ❤️ using Laravel | Ready for production deployment**
