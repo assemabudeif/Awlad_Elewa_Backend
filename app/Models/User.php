@@ -25,6 +25,8 @@ class User extends Authenticatable
         'password',
         'phone1',
         'phone2',
+        'fcm_token',
+        'notifications_enabled',
     ];
 
     /**
@@ -47,6 +49,23 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'notifications_enabled' => 'boolean',
         ];
+    }
+
+    /**
+     * Check if user has FCM token
+     */
+    public function hasFcmToken(): bool
+    {
+        return !empty($this->fcm_token);
+    }
+
+    /**
+     * Check if notifications are enabled for user
+     */
+    public function notificationsEnabled(): bool
+    {
+        return $this->notifications_enabled && $this->hasFcmToken();
     }
 }

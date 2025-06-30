@@ -6,11 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\RepairOrder;
 use App\Http\Requests\RepairOrderRequest;
 use App\Http\Resources\RepairOrderResource;
+use App\Services\NotificationService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class RepairOrderController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -34,6 +41,10 @@ class RepairOrderController extends Controller
         $data['audio'] = $request->audio->store('repairs', 'public') ?? null;
         $repair = RepairOrder::create($data);
         $repair->load('user');
+
+        // إرسال إشعار إنشاء طلب الصيانة
+        $this->notificationService->sendRepairOrderCreatedNotification($repair);
+
         return new RepairOrderResource($repair);
     }
 

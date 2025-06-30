@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Services\NotificationService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -14,6 +15,12 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
     public function register(Request $request)
     {
         $request->validate([
@@ -30,7 +37,12 @@ class AuthController extends Controller
             'phone2' => $request->phone2,
             'password' => Hash::make($request->password),
         ]);
+
         $token = $user->createToken('mobile')->plainTextToken;
+
+        // إرسال إشعار ترحيبي (سيتم إرساله عند تحديث FCM token)
+        // $this->notificationService->sendWelcomeNotification($user);
+
         return response(['user' => $user, 'token' => $token], 201);
     }
 

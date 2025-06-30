@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'firebase' => [
+        'credentials' => env('FIREBASE_CREDENTIALS', storage_path('app/public/awlad-elewa-firebase-adminsdk-fbsvc-4a6fecf51e.json')),
+        'project_id' => env('FIREBASE_PROJECT_ID', 'awlad-elewa'),
+    ],
+
 ];

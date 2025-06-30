@@ -8,10 +8,17 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Http\Requests\OrderRequest;
 use App\Http\Resources\OrderResource;
+use App\Services\NotificationService;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -45,6 +52,9 @@ class OrderController extends Controller
             $item->order_id = $order->id;
             $item->save();
         }
+
+        // إرسال إشعار إنشاء الطلب
+        $this->notificationService->sendOrderCreatedNotification($order);
 
         return new OrderResource($order);
     }

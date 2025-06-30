@@ -1,46 +1,81 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BannerController;
+use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\RepairOrderController;
+use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Api\WishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// Public Routes
-Route::get('settings', [App\Http\Controllers\Api\SettingController::class, 'index']);
+// Apply ForceJsonResponse to all API routes
+Route::middleware(\App\Http\Middleware\ForceJsonResponse::class)->group(function () {
+
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    })->middleware('auth:sanctum');
+
+    // Public routes
+    Route::group(['prefix' => 'auth'], function () {
+        Route::post('/register', [AuthController::class, 'register']);
+        Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+        Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+    });
 
 
-// Products
-Route::get('products', [App\Http\Controllers\Api\ProductController::class, 'index']);
-Route::get('products/{id}', [App\Http\Controllers\Api\ProductController::class, 'show']);
+    // Public data routes
+    Route::get('/categories', [CategoryController::class, 'index']);
+    Route::get('/categories/{category}', [CategoryController::class, 'show']);
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/products/{product}', [ProductController::class, 'show']);
+    Route::get('/banners', [BannerController::class, 'index']);
+    Route::get('/settings', [SettingController::class, 'index']);
 
-// Categories
-Route::get('categories', [App\Http\Controllers\Api\CategoryController::class, 'index']);
-Route::get('categories/{id}', [App\Http\Controllers\Api\CategoryController::class, 'show']);
+    // Protected routes
+    Route::middleware('auth:sanctum')->group(function () {
+        // Auth routes
+        Route::post('/logout', [AuthController::class, 'logout']);
 
-// Banners
-Route::get('banners', [App\Http\Controllers\Api\BannerController::class, 'index']);
+        // Profile routes
+        Route::get('/profile', [ProfileController::class, 'show']);
+        Route::put('/profile', [ProfileController::class, 'update']);
+        Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar']);
 
-Route::middleware('auth:sanctum')->group(function () {
-    // Orders
-    Route::apiResource('orders', App\Http\Controllers\Api\OrderController::class);
+        // Cart routes
+        Route::get('/cart', [CartController::class, 'index']);
+        Route::post('/cart', [CartController::class, 'store']);
+        Route::put('/cart/{id}', [CartController::class, 'update']);
+        Route::delete('/cart/{id}', [CartController::class, 'destroy']);
+        Route::delete('/cart', [CartController::class, 'clear']);
 
-    // Repair Orders
-    Route::apiResource('repair-orders', App\Http\Controllers\Api\RepairOrderController::class);
+        // Wishlist routes
+        Route::get('/wishlist', [WishlistController::class, 'index']);
+        Route::post('/wishlist', [WishlistController::class, 'store']);
+        Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy']);
 
-    // Profile
-    Route::get('profile', [App\Http\Controllers\Api\ProfileController::class, 'show']);
-    Route::put('profile', [App\Http\Controllers\Api\ProfileController::class, 'update']);
-    Route::delete('profile', [App\Http\Controllers\Api\ProfileController::class, 'destroy']);
+        // Order routes
+        Route::get('/orders', [OrderController::class, 'index']);
+        Route::post('/orders', [OrderController::class, 'store']);
+        Route::get('/orders/{order}', [OrderController::class, 'show']);
 
-    // Cart
-    Route::get('cart', [App\Http\Controllers\Api\CartController::class, 'index']);
-    Route::post('cart/add', [App\Http\Controllers\Api\CartController::class, 'addToCart']);
-    Route::put('cart/update', [App\Http\Controllers\Api\CartController::class, 'updateCart']);
-    Route::delete('cart/remove', [App\Http\Controllers\Api\CartController::class, 'removeFromCart']);
-    Route::post('cart/clear', [App\Http\Controllers\Api\CartController::class, 'clearCart']);
-});
+        // Repair order routes
+        Route::get('/repair-orders', [RepairOrderController::class, 'index']);
+        Route::post('/repair-orders', [RepairOrderController::class, 'store']);
+        Route::get('/repair-orders/{repairOrder}', [RepairOrderController::class, 'show']);
 
-// Auth
-Route::post('auth/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
-Route::post('auth/register', [App\Http\Controllers\Api\AuthController::class, 'register']);
-Route::post('auth/forgot-password', [App\Http\Controllers\Api\AuthController::class, 'forgotPassword']);
-Route::middleware('auth:sanctum')->post('auth/reset-password', [App\Http\Controllers\Api\AuthController::class, 'resetPassword']);
-Route::middleware('auth:sanctum')->post('auth/logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);
+        // Notification routes
+        Route::post('/fcm-token', [NotificationController::class, 'updateFcmToken']);
+        Route::post('/notifications/toggle', [NotificationController::class, 'toggleNotifications']);
+        Route::get('/notifications/settings', [NotificationController::class, 'getSettings']);
+        Route::get('/notifications', [NotificationController::class, 'getNotifications']);
+        Route::post('/notifications/{notification_id}/read', [NotificationController::class, 'markAsRead']);
+        Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+    });
+}); // End ForceJsonResponse middleware group
