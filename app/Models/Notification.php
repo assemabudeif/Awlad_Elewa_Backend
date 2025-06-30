@@ -60,3 +60,4 @@ class Notification extends Model
         return $this->scheduled_at ? $this->scheduled_at->format('d/m/Y H:i') : '-';
     }
 }
+ 

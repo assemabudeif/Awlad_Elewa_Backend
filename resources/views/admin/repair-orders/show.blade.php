@@ -29,21 +29,7 @@
         <div class="row mb-2">
             <div class="col-md-6">
                 <strong>الحالة:</strong>
-                @php
-                $statusColors = [
-                'pending' => 'warning',
-                'in_progress' => 'info',
-                'completed' => 'success',
-                'cancelled' => 'danger',
-                ];
-                $statusText = [
-                'pending' => 'قيد الانتظار',
-                'in_progress' => 'قيد التنفيذ',
-                'completed' => 'مكتمل',
-                'cancelled' => 'ملغي',
-                ];
-                @endphp
-                <span class="badge bg-{{ $statusColors[$repairOrder->status] }}">{{ $statusText[$repairOrder->status] }}</span>
+                <span class="badge bg-{{ $repairOrder->status_color }}">{{ $repairOrder->status_text }}</span>
             </div>
         </div>
         <div class="row mb-2">
@@ -59,12 +45,40 @@
                 <strong>رقم الهاتف 2:</strong> {{ $repairOrder->phone2 ?? '-' }}
             </div>
         </div>
+        @if($repairOrder->estimated_cost || $repairOrder->final_cost)
+        <div class="row mb-2">
+            @if($repairOrder->estimated_cost)
+            <div class="col-md-6">
+                <strong>التكلفة المقدرة:</strong>
+                <span class="text-info">{{ number_format($repairOrder->estimated_cost, 2) }} ج.م</span>
+            </div>
+            @endif
+            @if($repairOrder->final_cost)
+            <div class="col-md-6">
+                <strong>التكلفة النهائية:</strong>
+                <span class="text-success">{{ number_format($repairOrder->final_cost, 2) }} ج.م</span>
+            </div>
+            @endif
+        </div>
+        @endif
+        @if($repairOrder->notes)
+        <div class="row mb-2">
+            <div class="col-md-12">
+                <strong>ملاحظات:</strong> {{ $repairOrder->notes }}
+            </div>
+        </div>
+        @endif
         <div class="row mb-2">
             <div class="col-md-6">
                 <strong>صورة:</strong>
-                @if($repairOrder->photo)
+                @if($repairOrder->hasPhoto())
                 <div class="mt-2">
-                    <img src="{{ asset('storage/' . $repairOrder->photo) }}" alt="صورة الطلب" class="img-fluid rounded shadow" style="max-height: 200px;">
+                    <img src="{{ $repairOrder->photo_url }}" alt="صورة الطلب" class="img-fluid rounded shadow" style="max-height: 200px;">
+                    <div class="mt-1">
+                        <a href="{{ $repairOrder->photo_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-expand"></i> عرض بالحجم الكامل
+                        </a>
+                    </div>
                 </div>
                 @else
                 <span class="text-muted">لا توجد صورة</span>
@@ -72,12 +86,19 @@
             </div>
             <div class="col-md-6">
                 <strong>تسجيل صوتي:</strong>
-                @if($repairOrder->audio)
+                @if($repairOrder->hasAudio())
                 <div class="mt-2">
-                    <audio controls>
-                        <source src="{{ asset('storage/' . $repairOrder->audio) }}" type="audio/mpeg">
+                    <audio controls class="w-100">
+                        <source src="{{ $repairOrder->audio_url }}" type="audio/mpeg">
+                        <source src="{{ $repairOrder->audio_url }}" type="audio/wav">
+                        <source src="{{ $repairOrder->audio_url }}" type="audio/ogg">
                         متصفحك لا يدعم تشغيل الصوت.
                     </audio>
+                    <div class="mt-1">
+                        <a href="{{ $repairOrder->audio_url }}" download class="btn btn-sm btn-outline-success">
+                            <i class="fas fa-download"></i> تحميل الملف الصوتي
+                        </a>
+                    </div>
                 </div>
                 @else
                 <span class="text-muted">لا يوجد تسجيل صوتي</span>

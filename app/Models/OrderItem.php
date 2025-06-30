@@ -27,4 +27,16 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    // حساب سعر الوحدة من السعر الإجمالي المحفوظ
+    public function getUnitPriceAttribute()
+    {
+        return $this->quantity > 0 ? $this->price / $this->quantity : 0;
+    }
+
+    // حساب الإجمالي (للوضوح فقط، لأن price يحتوي على الإجمالي فعلاً)
+    public function getTotalPriceAttribute()
+    {
+        return $this->price;
+    }
 }

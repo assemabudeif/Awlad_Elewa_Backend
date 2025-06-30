@@ -18,9 +18,7 @@ class CartController extends Controller
             ->with('product')
             ->get();
 
-        $total = $cart->sum(function ($item) {
-            return $item->price;
-        });
+        $total = $cart->sum('price');
 
         if ($cart->count() == 0) {
             return response()->json([

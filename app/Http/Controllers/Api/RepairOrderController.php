@@ -37,8 +37,17 @@ class RepairOrderController extends Controller
         $data = $request->validated();
         $data['user_id'] = Auth::id();
         $data['status'] = 'pending';
-        $data['photo'] = $request->photo->store('repairs', 'public') ?? null;
-        $data['audio'] = $request->audio->store('repairs', 'public') ?? null;
+
+        // التعامل مع رفع الصورة
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo')->store('repairs', 'public');
+        }
+
+        // التعامل مع رفع الملف الصوتي
+        if ($request->hasFile('audio')) {
+            $data['audio'] = $request->file('audio')->store('repairs', 'public');
+        }
+
         $repair = RepairOrder::create($data);
         $repair->load('user');
 

@@ -63,6 +63,13 @@
             <div class="col-md-6">
                 <strong>إجمالي المبلغ:</strong> <span class="text-success">{{ number_format($order->total_price, 2) }} ج.م</span>
             </div>
+            <div class="col-md-6">
+                <strong>الإجمالي المحسوب:</strong>
+                <span class="text-info">{{ number_format($order->calculated_total, 2) }} ج.م</span>
+                @if($order->total_discrepancy > 0.01)
+                <span class="badge bg-warning">فرق: {{ number_format($order->total_discrepancy, 2) }} ج.م</span>
+                @endif
+            </div>
         </div>
         <hr>
         <h5 class="mb-3">بيانات العميل</h5>
@@ -76,7 +83,7 @@
         </div>
         <hr>
         <h5 class="mb-3">عناصر الطلب</h5>
-        @if($order->items && $order->items->count() > 0)
+        @if($order->orderItems && $order->orderItems->count() > 0)
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
@@ -89,17 +96,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($order->items as $item)
+                    @foreach($order->orderItems as $item)
                     <tr>
                         <td>{{ $item->id }}</td>
                         <td>
                             <a href="{{ route('admin.products.show', $item->product) }}">{{ $item->product->name }}</a>
                         </td>
                         <td>{{ $item->quantity }}</td>
+                        <td>{{ number_format($item->unit_price, 2) }} ج.م</td>
                         <td>{{ number_format($item->price, 2) }} ج.م</td>
-                        <td>{{ number_format($item->price * $item->quantity, 2) }} ج.م</td>
                     </tr>
                     @endforeach
+                    <tr class="table-secondary">
+                        <td colspan="4" class="text-end"><strong>الإجمالي:</strong></td>
+                        <td><strong>{{ number_format($order->orderItems->sum('price'), 2) }} ج.م</strong></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

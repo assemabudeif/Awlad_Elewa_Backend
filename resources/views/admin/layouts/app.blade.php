@@ -537,17 +537,79 @@
             color: white;
         }
 
-        .pagination .page-link {
-            border-radius: 8px;
+        /* Custom Pagination Styles */
+        .pagination {
+            gap: 5px;
+            margin: 0 auto;
+            justify-content: center;
+        }
+
+        .pagination .page-item {
             margin: 0 2px;
-            border: none;
+        }
+
+        .pagination .page-link {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
             color: var(--primary-color);
             font-weight: 600;
+            padding: 10px 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .pagination .page-link:hover {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(179, 128, 31, 0.3);
         }
 
         .pagination .page-item.active .page-link {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            border: none;
+            border-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 5px 15px rgba(179, 128, 31, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .pagination .page-item.disabled .page-link {
+            background: #f8f9fa;
+            border-color: #e9ecef;
+            color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .pagination .page-item.disabled .page-link:hover {
+            transform: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            background: #f8f9fa;
+            color: #6c757d;
+        }
+
+        .pagination-sm .page-link {
+            padding: 8px 12px;
+            font-size: 0.875rem;
+        }
+
+        .pagination-lg .page-link {
+            padding: 12px 18px;
+            font-size: 1.125rem;
+        }
+
+        /* Pagination Info Styles */
+        .pagination-info {
+            color: #6c757d;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            text-align: center;
         }
 
         .dropdown-menu {

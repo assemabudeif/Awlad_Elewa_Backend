@@ -17,19 +17,19 @@ class OrderController extends Controller
     }
     public function index()
     {
-        $orders = Order::with(['user', 'items.product'])->latest()->paginate(15);
+        $orders = Order::with(['user', 'orderItems.product'])->latest()->paginate(15);
         return view('admin.orders.index', compact('orders'));
     }
 
     public function show(Order $order)
     {
-        $order->load(['user', 'items.product']);
+        $order->load(['user', 'orderItems.product']);
         return view('admin.orders.show', compact('order'));
     }
 
     public function edit(Order $order)
     {
-        $order->load(['user', 'items.product']);
+        $order->load(['user', 'orderItems.product']);
         return view('admin.orders.edit', compact('order'));
     }
 

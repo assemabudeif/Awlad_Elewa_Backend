@@ -235,4 +235,59 @@ class NotificationService
             Log::error('خطأ في إرسال الإشعار العام: ' . $e->getMessage());
         }
     }
+
+    /**
+     * إرسال إشعار عند تغيير حالة طلب الصيانة
+     */
+    public function sendRepairOrderStatusChangedNotification(RepairOrder $repairOrder, $oldStatus, $newStatus)
+    {
+        try {
+            $user = $repairOrder->user;
+
+            $statusMessages = [
+                'pending' => 'طلب الصيانة قيد الانتظار',
+                'in_progress' => 'طلب الصيانة قيد التنفيذ',
+                'completed' => 'تم إكمال صيانة جهازك',
+                'cancelled' => 'تم إلغاء طلب الصيانة'
+            ];
+
+            $title = $statusMessages[$newStatus] ?? 'تم تحديث حالة طلب الصيانة';
+            $body = "تم تحديث حالة طلب الصيانة رقم #{$repairOrder->id} إلى: {$statusMessages[$newStatus]}";
+
+            // إنشاء إشعار مخصص
+            $notification = Notification::create([
+                'title' => $title,
+                'body' => $body,
+                'type' => Notification::TYPE_SPECIFIC_USERS,
+                'sent_to' => json_encode([$user->id]),
+                'status' => Notification::STATUS_SENT,
+                'sent_at' => now(),
+                'data' => [
+                    'repair_order_id' => $repairOrder->id,
+                    'type' => 'repair_order_status_changed',
+                    'old_status' => $oldStatus,
+                    'new_status' => $newStatus
+                ]
+            ]);
+
+            // إرسال FCM للمستخدم
+            if ($user->notificationsEnabled()) {
+                $result = $this->fcmService->sendToDevice(
+                    $user->fcm_token,
+                    $notification->title,
+                    $notification->body,
+                    null,
+                    $notification->data
+                );
+
+                if ($result['success']) {
+                    $notification->update(['sent_count' => 1]);
+                }
+            }
+
+            Log::info("تم تحديث حالة طلب الصيانة رقم #{$repairOrder->id} من {$oldStatus} إلى {$newStatus}");
+        } catch (\Exception $e) {
+            Log::error('خطأ في إرسال إشعار تغيير حالة طلب الصيانة: ' . $e->getMessage());
+        }
+    }
 }
