@@ -19,7 +19,7 @@
     <div class="row g-0">
         <div class="col-md-4 d-flex align-items-center justify-content-center p-4">
             @if($product->image)
-            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="img-fluid rounded shadow" style="max-height: 300px;">
+            <img src="{{ asset('public/storage/' . $product->image) }}" alt="{{ $product->name }}" class="img-fluid rounded shadow" style="max-height: 300px;">
             @else
             <div class="bg-light d-flex align-items-center justify-content-center" style="width: 200px; height: 200px;">
                 <i class="fas fa-image fa-3x text-muted"></i>

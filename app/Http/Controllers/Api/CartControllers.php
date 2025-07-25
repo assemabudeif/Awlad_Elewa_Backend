@@ -46,7 +46,8 @@ class CartController extends Controller
         $product = Product::findOrFail($request->product_id);
 
         // Check if product already exists in cart
-        $cartItem = OrderItem::where('user_id', Auth::id())
+        $user = Auth::user();
+        $cartItem = OrderItem::where('user_id', $user->id)
             ->where('product_id', $request->product_id)
             ->where('order_id', null)
             ->first();

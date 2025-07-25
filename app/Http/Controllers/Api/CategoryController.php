@@ -8,6 +8,8 @@ use App\Models\Category;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Product;
+use App\Http\Resources\ProductResource;
 
 
 class CategoryController extends Controller
@@ -68,5 +70,11 @@ class CategoryController extends Controller
         }
         $category->delete();
         return response()->json(['message' => 'Category deleted successfully']);
+    }
+
+    public function products($id)
+    {
+        $products = Product::where('category_id', $id)->paginate(15);
+        return ProductResource::collection($products);
     }
 }

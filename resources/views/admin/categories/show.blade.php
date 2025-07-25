@@ -53,7 +53,7 @@
             </div>
             <div class="card-body text-center">
                 @if($category->hasIcon())
-                <img src="{{ $category->icon_url }}"
+                <img src="{{ asset('public/storage/'.$category->icon) }}"
                     alt="{{ $category->name }}"
                     class="img-fluid rounded"
                     style="max-width: 200px; max-height: 200px; object-fit: cover;">
@@ -112,7 +112,7 @@
                         <td>{{ $product->id }}</td>
                         <td>
                             @if($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}"
+                            <img src="{{ asset('public/storage/' . $product->image) }}"
                                 alt="{{ $product->name }}"
                                 class="img-thumbnail"
                                 style="width: 50px; height: 50px; object-fit: cover;">

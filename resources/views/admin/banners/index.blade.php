@@ -34,7 +34,7 @@
                     <tr>
                         <td>{{ $banner->id }}</td>
                         <td>
-                            <img src="{{ asset('storage/' . $banner->image) }}" alt="بانر" class="img-thumbnail" style="width: 80px; height: 50px; object-fit: cover;">
+                            <img src="{{ asset('public/storage/' . $banner->image) }}" alt="بانر" class="img-thumbnail" style="width: 80px; height: 50px; object-fit: cover;">
                         </td>
                         <td>
                             @if($banner->link)

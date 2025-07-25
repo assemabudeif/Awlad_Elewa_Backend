@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class EnsureUserIsAdmin
+class EnsureSuperAdmin
 {
     /**
      * Handle an incoming request.
@@ -20,12 +20,9 @@ class EnsureUserIsAdmin
             return redirect()->route('admin.login');
         }
 
-        // Check if this is an admin management route that requires super admin
-        if ($request->routeIs('admin.admin-management.*')) {
-            if (!Auth::guard('admin')->user()->isSuperAdmin()) {
-                return redirect()->route('admin.dashboard')
-                    ->with('error', 'فقط المدير الرئيسي يمكنه إدارة المديرين الآخرين');
-            }
+        if (!Auth::guard('admin')->user()->isSuperAdmin()) {
+            return redirect()->route('admin.dashboard')
+                ->with('error', 'ليس لديك صلاحية للوصول إلى هذه الصفحة');
         }
 
         return $next($request);

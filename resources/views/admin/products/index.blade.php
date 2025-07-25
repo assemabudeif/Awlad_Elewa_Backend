@@ -37,7 +37,7 @@
                         <td>{{ $product->id }}</td>
                         <td>
                             @if($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}"
+                            <img src="{{ asset('public/storage/' . $product->image) }}"
                                 alt="{{ $product->name }}"
                                 class="img-thumbnail"
                                 style="width: 50px; height: 50px; object-fit: cover;">

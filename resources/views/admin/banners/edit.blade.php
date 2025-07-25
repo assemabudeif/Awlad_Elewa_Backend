@@ -37,7 +37,7 @@
             </div>
             <div class="mb-3">
                 <div id="imagePreview" class="{{ $banner->image ? '' : 'd-none' }}">
-                    <img id="preview" src="{{ $banner->image ? asset('storage/' . $banner->image) : '' }}" alt="معاينة الصورة" class="img-fluid rounded" style="max-height: 200px;">
+                    <img id="preview" src="{{ $banner->image ? asset('public/storage/' . $banner->image) : '' }}" alt="معاينة الصورة" class="img-fluid rounded" style="max-height: 200px;">
                 </div>
             </div>
             <div class="d-flex justify-content-end gap-2">

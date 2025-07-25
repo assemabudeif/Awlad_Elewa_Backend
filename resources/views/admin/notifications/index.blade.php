@@ -95,7 +95,7 @@
                                     <td>
                                         <div class="d-flex py-1 align-items-center">
                                             @if($notification->image)
-                                            <span class="avatar me-2" style="background-image: url('{{ asset('storage/' . $notification->image) }}')"></span>
+                                            <span class="avatar me-2" style="background-image: url('{{ asset('public/storage/' . $notification->image) }}')"></span>
                                             @endif
                                             <div class="flex-fill">
                                                 <div class="font-weight-medium">{{ $notification->title }}</div>

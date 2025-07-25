@@ -59,23 +59,23 @@ class RepairOrder extends Model
     // فحص وجود الملفات
     public function hasPhoto()
     {
-        return !empty($this->photo) && file_exists(storage_path('app/public/' . $this->photo));
+        return !empty($this->photo) && file_exists(public_path('public/storage/' . $this->photo));
     }
 
     public function hasAudio()
     {
-        return !empty($this->audio) && file_exists(storage_path('app/public/' . $this->audio));
+        return !empty($this->audio) && file_exists(public_path('public/storage/' . $this->audio));
     }
 
     // الحصول على URL الصورة
     public function getPhotoUrlAttribute()
     {
-        return $this->photo ? asset('storage/' . $this->photo) : null;
+        return $this->photo ? asset('public/storage/' . $this->photo) : null;
     }
 
     // الحصول على URL الصوت
     public function getAudioUrlAttribute()
     {
-        return $this->audio ? asset('storage/' . $this->audio) : null;
+        return $this->audio ? asset('public/storage/' . $this->audio) : null;
     }
 }

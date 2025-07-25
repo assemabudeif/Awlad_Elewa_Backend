@@ -749,6 +749,14 @@
                                 الإعدادات
                             </a>
                         </li>
+                        @if(auth()->guard('admin')->user()->isSuperAdmin())
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.admin-management.*') ? 'active' : '' }}" href="{{ route('admin.admin-management.index') }}">
+                                <i class="fas fa-user-shield"></i>
+                                إدارة المديرين
+                            </a>
+                        </li>
+                        @endif
                     </ul>
 
                     <hr class="text-white-50 my-4">
@@ -780,7 +788,7 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">
                                     <i class="fas fa-user-circle text-primary me-2"></i>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::guard('admin')->user()->name }}
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

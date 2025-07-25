@@ -18,7 +18,7 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'icon' => $this->icon,
-            'products' => $this->products->count() > 0 ? ProductResource::collection($this->whenLoaded('products')) : [],
+            // 'products' => $this->products->count() > 0 ? ProductResource::collection($this->whenLoaded('products')) : [],
         ];
     }
 }

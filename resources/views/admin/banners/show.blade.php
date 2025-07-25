@@ -19,7 +19,7 @@
     <div class="card-body">
         <h5 class="mb-3">صورة البانر</h5>
         <div class="text-center mb-3">
-            <img src="{{ asset('storage/' . $banner->image) }}" alt="بانر" class="img-fluid rounded shadow" style="max-height: 400px;">
+            <img src="{{ asset('public/storage/' . $banner->image) }}" alt="بانر" class="img-fluid rounded shadow" style="max-height: 400px;">
         </div>
         <div class="row">
             <div class="col-md-6">

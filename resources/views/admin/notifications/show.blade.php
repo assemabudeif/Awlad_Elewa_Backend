@@ -100,7 +100,7 @@
                         <div class="row mb-3">
                             <div class="col-sm-3 text-muted">صورة الإشعار:</div>
                             <div class="col-sm-9">
-                                <img src="{{ asset('storage/' . $notification->image) }}" alt="صورة الإشعار" class="img-thumbnail" style="max-width: 300px;">
+                                <img src="{{ asset('public/storage/' . $notification->image) }}" alt="صورة الإشعار" class="img-thumbnail" style="max-width: 300px;">
                             </div>
                         </div>
                         @endif

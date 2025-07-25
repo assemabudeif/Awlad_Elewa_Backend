@@ -1,0 +1,701 @@
+openapi: 3.0.3
+info:
+  title: 'Awlad Elewa API Documentation'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000'
+tags:
+  -
+    name: Endpoints
+    description: ''
+paths:
+  /api/user:
+    get:
+      summary: ''
+      operationId: getApiUser
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/auth/register:
+    post:
+      summary: ''
+      operationId: postApiAuthRegister
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: vmqeopfuudtdsufvyvddq
+                  nullable: false
+                email:
+                  type: string
+                  description: 'Must be a valid email address. Must not be greater than 255 characters.'
+                  example: kunde.eloisa@example.com
+                  nullable: false
+                phone1:
+                  type: string
+                  description: 'Must not be greater than 20 characters.'
+                  example: hfqcoynlazghdtqtq
+                  nullable: false
+                phone2:
+                  type: string
+                  description: 'Must not be greater than 20 characters.'
+                  example: xbajwbpilpmufinll
+                  nullable: true
+                password:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: false
+              required:
+                - name
+                - email
+                - phone1
+                - password
+      security: []
+  /api/auth/login:
+    post:
+      summary: ''
+      operationId: postApiAuthLogin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: false
+                password:
+                  type: string
+                  description: ''
+                  example: 'O[2UZ5ij-e/dl4m{o,'
+                  nullable: false
+              required:
+                - login
+                - password
+      security: []
+  /api/auth/logout:
+    post:
+      summary: ''
+      operationId: postApiAuthLogout
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/auth/forgot-password:
+    post:
+      summary: ''
+      operationId: postApiAuthForgotPassword
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address. The <code>email</code> of an existing record in the users table.'
+                  example: qkunze@example.com
+                  nullable: false
+              required:
+                - email
+      security: []
+  /api/auth/reset-password:
+    post:
+      summary: ''
+      operationId: postApiAuthResetPassword
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: false
+              required:
+                - password
+      security: []
+  /api/categories:
+    get:
+      summary: 'Display a listing of the resource.'
+      operationId: displayAListingOfTheResource
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/categories/{category}':
+    get:
+      summary: 'Display the specified resource.'
+      operationId: displayTheSpecifiedResource
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: category
+        description: 'The category.'
+        example: consequatur
+        required: true
+        schema:
+          type: string
+  '/api/categories/{category}/products':
+    get:
+      summary: ''
+      operationId: getApiCategoriesCategoryProducts
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: category
+        description: 'The category.'
+        example: consequatur
+        required: true
+        schema:
+          type: string
+  /api/products:
+    get:
+      summary: 'Display a listing of the resource.'
+      operationId: displayAListingOfTheResource
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/products/{product}':
+    get:
+      summary: 'Display the specified resource.'
+      operationId: displayTheSpecifiedResource
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: product
+        description: 'The product.'
+        example: consequatur
+        required: true
+        schema:
+          type: string
+  /api/banners:
+    get:
+      summary: 'Display a listing of the resource.'
+      operationId: displayAListingOfTheResource
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/settings:
+    get:
+      summary: 'Display a listing of the resource.'
+      operationId: displayAListingOfTheResource
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/logout:
+    post:
+      summary: ''
+      operationId: postApiLogout
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/profile:
+    get:
+      summary: ''
+      operationId: getApiProfile
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: ''
+      operationId: putApiProfile
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: vmqeopfuudtdsufvyvddq
+                  nullable: false
+                email:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                phone1:
+                  type: string
+                  description: 'Must not be greater than 20 characters.'
+                  example: amniihfqcoynlazgh
+                  nullable: false
+                phone2:
+                  type: string
+                  description: 'Must not be greater than 20 characters.'
+                  example: dtqtqxbajwbpilpmu
+                  nullable: true
+                password:
+                  type: string
+                  description: 'Must be at least 6 characters.'
+                  example: '>SJIrIV#l'
+                  nullable: true
+              required:
+                - name
+                - phone1
+      security: []
+  /api/cart:
+    get:
+      summary: ''
+      operationId: getApiCart
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiCart
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the products table.'
+                  example: consequatur
+                  nullable: false
+                quantity:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 45
+                  nullable: false
+              required:
+                - product_id
+                - quantity
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiCart
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/cart/{id}':
+    put:
+      summary: ''
+      operationId: putApiCartId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the products table.'
+                  example: consequatur
+                  nullable: false
+                quantity:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 45
+                  nullable: false
+              required:
+                - product_id
+                - quantity
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiCartId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the products table.'
+                  example: consequatur
+                  nullable: false
+              required:
+                - product_id
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the cart.'
+        example: consequatur
+        required: true
+        schema:
+          type: string
+  /api/orders:
+    get:
+      summary: 'Display a listing of the resource.'
+      operationId: displayAListingOfTheResource
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Store a newly created resource in storage.'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: false
+                payment_method:
+                  type: string
+                  description: ''
+                  example: cash
+                  nullable: false
+                  enum:
+                    - cash
+                    - visa
+                phone1:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: false
+                phone2:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: true
+              required:
+                - address
+                - payment_method
+                - phone1
+      security: []
+  '/api/orders/{order}':
+    get:
+      summary: 'Display the specified resource.'
+      operationId: displayTheSpecifiedResource
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: order
+        description: 'The order.'
+        example: consequatur
+        required: true
+        schema:
+          type: string
+  /api/repair-orders:
+    get:
+      summary: 'Display a listing of the resource.'
+      operationId: displayAListingOfTheResource
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Store a newly created resource in storage.'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: ''
+                  example: 'Dolores dolorum amet iste laborum eius est dolor.'
+                  nullable: false
+                photo:
+                  type: string
+                  format: binary
+                  description: 'Must be an image. Must not be greater than 2048 kilobytes.'
+                  nullable: true
+                audio:
+                  type: string
+                  format: binary
+                  description: 'Must be a file. Must not be greater than 10240 kilobytes.'
+                  nullable: true
+                phone1:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: false
+                phone2:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: true
+                estimated_cost:
+                  type: number
+                  description: 'Must be at least 0. Must not be greater than 999999.99.'
+                  example: 13
+                  nullable: true
+                final_cost:
+                  type: number
+                  description: 'Must be at least 0. Must not be greater than 999999.99.'
+                  example: 16
+                  nullable: true
+                notes:
+                  type: string
+                  description: 'Must not be greater than 1000 characters.'
+                  example: eopfuudtdsufvyvddqamn
+                  nullable: true
+              required:
+                - description
+                - phone1
+      security: []
+  '/api/repair-orders/{repairOrder}':
+    get:
+      summary: 'Display the specified resource.'
+      operationId: displayTheSpecifiedResource
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: repairOrder
+        description: ''
+        example: consequatur
+        required: true
+        schema:
+          type: string
+  /api/fcm-token:
+    post:
+      summary: 'Update FCM token for authenticated user'
+      operationId: updateFCMTokenForAuthenticatedUser
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fcm_token:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: false
+              required:
+                - fcm_token
+      security: []
+  /api/notifications/toggle:
+    post:
+      summary: 'Toggle notifications for authenticated user'
+      operationId: toggleNotificationsForAuthenticatedUser
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                  description: ''
+                  example: false
+                  nullable: false
+              required:
+                - enabled
+      security: []
+  /api/notifications/settings:
+    get:
+      summary: "Get user's notification settings"
+      operationId: getUsersNotificationSettings
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/notifications:
+    get:
+      summary: "Get user's notifications history (Laravel notifications)"
+      operationId: getUsersNotificationsHistoryLaravelNotifications
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/notifications/{notification_id}/read':
+    post:
+      summary: 'Mark notification as read'
+      operationId: markNotificationAsRead
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notification_id:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: false
+              required:
+                - notification_id
+      security: []
+    parameters:
+      -
+        in: path
+        name: notification_id
+        description: 'The ID of the notification.'
+        example: consequatur
+        required: true
+        schema:
+          type: string
+  /api/notifications/read-all:
+    post:
+      summary: 'Mark all notifications as read'
+      operationId: markAllNotificationsAsRead
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+

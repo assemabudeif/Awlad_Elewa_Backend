@@ -25,6 +25,7 @@ Route::middleware(\App\Http\Middleware\ForceJsonResponse::class)->group(function
     Route::group(['prefix' => 'auth'], function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
         Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
         Route::post('/reset-password', [AuthController::class, 'resetPassword']);
     });
@@ -33,6 +34,7 @@ Route::middleware(\App\Http\Middleware\ForceJsonResponse::class)->group(function
     // Public data routes
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{category}', [CategoryController::class, 'show']);
+    Route::get('/categories/{category}/products', [CategoryController::class, 'products']);
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{product}', [ProductController::class, 'show']);
     Route::get('/banners', [BannerController::class, 'index']);
@@ -50,10 +52,10 @@ Route::middleware(\App\Http\Middleware\ForceJsonResponse::class)->group(function
 
         // Cart routes
         Route::get('/cart', [CartController::class, 'index']);
-        Route::post('/cart', [CartController::class, 'store']);
-        Route::put('/cart/{id}', [CartController::class, 'update']);
-        Route::delete('/cart/{id}', [CartController::class, 'destroy']);
-        Route::delete('/cart', [CartController::class, 'clear']);
+        Route::post('/cart', [CartController::class, 'addToCart']);
+        Route::put('/cart/{id}', [CartController::class, 'updateCart']);
+        Route::delete('/cart/{id}', [CartController::class, 'removeFromCart']);
+        Route::delete('/cart', [CartController::class, 'clearCart']);
 
         // Wishlist routes
         Route::get('/wishlist', [WishlistController::class, 'index']);

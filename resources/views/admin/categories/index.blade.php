@@ -39,7 +39,7 @@
                         </td>
                         <td>
                             @if($category->hasIcon())
-                            <img src="{{ $category->icon_url }}"
+                            <img src="{{ asset('public/storage/'.$category->icon) }}"
                                 alt="{{ $category->name }}"
                                 class="img-thumbnail"
                                 style="width: 50px; height: 50px; object-fit: cover;">

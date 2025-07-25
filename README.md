@@ -1,73 +1,46 @@
 # 🛒 Awlad Elewa E-Commerce Platform
 ### Laravel Backend & Admin Panel with Mobile API
 
-[![Laravel](https://img.shields.io/badge/Laravel-11.x-red.svg)](https://laravel.com/)
+[![Laravel](https://img.shields.io/badge/Laravel-12.x-red.svg)](https://laravel.com/)
 [![PHP](https://img.shields.io/badge/PHP-8.2+-blue.svg)](https://php.net/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![API](https://img.shields.io/badge/API-REST-orange.svg)](docs)
 
-> **Professional E-Commerce Backend System** built with Laravel featuring comprehensive admin panel, mobile API, real-time notifications, and advanced business logic for commercial retail operations.
-
----
-
-## 📋 **Project Overview**
-
-**Awlad Elewa** is a sophisticated e-commerce backend system designed for furniture and electronics retail business. The project demonstrates advanced Laravel development practices, modern API design, and enterprise-level architectural patterns.
-
-### 🎯 **Key Objectives**
-- Provide scalable backend infrastructure for mobile e-commerce applications
-- Implement comprehensive admin panel for business operations management
-- Deliver real-time notifications and communication systems
-- Ensure robust security and data integrity
-- Support multi-platform integration capabilities
+> **Professional E-Commerce Backend System** built with Laravel featuring a comprehensive admin panel, mobile-first API, real-time notifications, and advanced business logic for commercial retail operations.
 
 ---
 
 ## 🚀 **Core Features & Capabilities**
 
 ### 🔐 **Authentication & Authorization**
-- **Laravel Sanctum** token-based authentication
-- **Spatie Permissions** role-based access control
-- **Multi-platform support** (Mobile & Web)
-- **Password reset** with email verification
-- **API rate limiting** and security middleware
+- **Laravel Sanctum** token-based authentication for stateless mobile API.
+- **Spatie Permissions** for robust role-based access control (RBAC).
+- Secure password reset and user profile management.
+- API rate limiting and security middleware to prevent abuse.
 
-### 📱 **Mobile API (REST)**
-```php
-// Example API Response Structure
-{
-    "data": {
-        "user": { ... },
-        "products": [ ... ],
-        "pagination": { ... }
-    },
-    "message": "Success",
-    "status": "success"
-}
-```
+### 📱 **Mobile-First API (RESTful)**
+- Comprehensive endpoints for all platform features.
+- Optimized responses with `ProductResource` for consistent data structure.
+- Search functionality across products, descriptions, and categories.
+- Full support for cart, wishlist, and order management.
 
-### 🛍️ **E-Commerce Management**
-- **Product Catalog** with categories and media management
-- **Shopping Cart** with persistent sessions
-- **Order Management** with status tracking
-- **Repair Services** booking and management
-- **Wishlist** functionality
-- **Multi-payment** method support
+### 🛍️ **E-Commerce Engine**
+- **Product Catalog:** Advanced product and category management.
+- **Shopping Cart:** Persistent cart functionality for authenticated users.
+- **Order Management:** Complete order lifecycle tracking from placement to completion.
+- **Repair Services:** Unique module for booking and managing repair orders.
+- **Wishlist:** Standard user wishlist functionality.
 
 ### 🔔 **Advanced Notification System**
-- **Firebase Cloud Messaging (FCM)** integration
-- **Real-time notifications** for order updates
-- **Automated notifications** for business events
-- **Admin panel** for custom broadcasts
-- **Scheduled notifications** with queue system
+- **Firebase Cloud Messaging (FCM)** integration via `laravel-notification-channels/fcm`.
+- Real-time notifications for order status updates, promotions, and more.
+- User-configurable notification settings.
 
-### 🎛️ **Admin Panel Features**
-- **Dashboard** with analytics and insights
-- **Product Management** with image uploads
-- **Order Processing** with status workflows
-- **User Management** with role assignments
-- **Banner Management** for promotions
-- **Settings Configuration** for business logic
+### 🎛️ **Admin Panel (Filament)**
+- Modern, powerful, and extensible admin interface built with **Filament v3**.
+- **Dashboard:** At-a-glance analytics and key metrics.
+- **Resource Management:** Full CRUD interfaces for Products, Orders, Users, Categories, Banners, and Repair Orders.
+- **Settings Configuration:** Manage application settings and business logic dynamically.
 
 ---
 
@@ -75,177 +48,95 @@
 
 ### **Backend Framework**
 ```
-Laravel 11.x
+Laravel 12.x
 ├── PHP 8.2+
-├── MySQL Database
-├── Redis (Caching & Sessions)
-├── Queue Workers
-└── File Storage (Local/Cloud)
+├── SQLite (Default), MySQL compatible
+├── Redis (Recommended for Caching & Queues)
+└── File Storage (Local/Public)
 ```
 
 ### **Key Technologies & Packages**
 
-| Technology | Purpose | Implementation |
+| Technology | Purpose | Version |
 |------------|---------|----------------|
-| **Laravel Sanctum** | API Authentication | Mobile token management |
-| **Spatie Media Library** | File Management | Image uploads & processing |
-| **Spatie Permissions** | Authorization | Role-based access control |
-| **Firebase SDK** | Push Notifications | Real-time messaging |
-| **Laravel Queues** | Background Jobs | Scheduled notifications |
-| **Custom Middleware** | API Security | Rate limiting & validation |
+| **Laravel Sanctum** | API Authentication | `^4.0` |
+| **Spatie Media Library** | File & Media Management | `^11.13` |
+| **Spatie Permissions** | Authorization (RBAC) | `^6.20` |
+| **FCM Notifications** | Push Notifications | `^5.1` |
+| **Filament** | Admin Panel | `^3.0` |
+| **Scribe** | API Documentation | `*` |
 
-### **Database Schema Design**
-```sql
--- Core Entities
-Users (Authentication & Profiles)
-├── Products (Catalog Management)
-├── Categories (Product Organization)
-├── Orders (Transaction Processing)
-├── OrderItems (Cart & Purchase Details)
-├── RepairOrders (Service Management)
-├── Notifications (Communication)
-└── Settings (Business Configuration)
-```
-
----
-
-## 📡 **API Documentation**
-
-### **Authentication Endpoints**
-```bash
-POST   /api/auth/register     # User registration
-POST   /api/auth/login        # User authentication  
-POST   /api/auth/logout       # Session termination
-POST   /api/auth/forgot-password   # Password reset
-```
-
-### **E-Commerce Endpoints**
-```bash
-# Product Management
-GET    /api/products          # Product listing with filters
-GET    /api/products/{id}     # Product details
-GET    /api/categories        # Category tree structure
-
-# Shopping Cart
-GET    /api/cart              # Cart contents
-POST   /api/cart              # Add to cart
-PUT    /api/cart/{id}         # Update quantities
-DELETE /api/cart/{id}         # Remove items
-
-# Order Processing
-GET    /api/orders            # Order history
-POST   /api/orders            # Place new order
-GET    /api/orders/{id}       # Order details
-```
-
-### **Notification System**
-```bash
-POST   /api/fcm-token         # Register FCM token
-GET    /api/notifications     # Notification history
-POST   /api/notifications/toggle    # Enable/disable notifications
-POST   /api/notifications/{id}/read # Mark as read
-```
+### **Database Schema Overview**
+- **`users`**: Stores user data, authentication, and profile information.
+- **`products`**: Core product catalog, including pricing and descriptions.
+- **`categories`**: Hierarchical categories for products.
+- **`orders` & `order_items`**: Manages customer orders and line items.
+- **`repair_orders`**: Tracks requests for repair services.
+- **`banners`**: Manages promotional banners for the mobile app.
+- **`wishlists`**: Stores user's saved products.
+- **`notifications`**: Logs notifications sent to users.
+- **`settings`**: Key-value store for application settings.
+- **Roles & Permissions**: Handled by `spatie/laravel-permission` tables.
 
 ---
 
-## 🔧 **Advanced Implementation Details**
+## ⚙️ **Getting Started**
 
-### **Service Layer Architecture**
-```php
-// NotificationService - Real-time communication
-class NotificationService 
-{
-    public function sendOrderCreatedNotification(Order $order)
-    public function sendOrderStatusChangedNotification(Order $order, $oldStatus, $newStatus)  
-    public function sendRepairOrderCreatedNotification(RepairOrder $repairOrder)
-    public function sendWelcomeNotification(User $user)
-    public function sendBroadcastNotification($title, $body, $image = null, $data = [])
-}
+### **Prerequisites**
+- PHP 8.2+
+- Composer
+- Node.js & NPM
+- A database server (SQLite, MySQL, etc.)
 
-// FCMService - Firebase integration
-class FCMService 
-{
-    public function sendToDevice(string $token, string $title, string $body)
-    public function sendToMultiple(array $tokens, string $title, string $body)
-    public function sendToTopic(string $topic, string $title, string $body)
-}
-```
-
-### **Automated Business Logic**
-```php
-// Automatic notification triggers
-Order::created()    → Welcome notification
-Order::updated()    → Status change notification  
-RepairOrder::created() → Service confirmation
-User::registered() → Welcome message (delayed)
-```
-
-### **Queue Management**
-```php
-// Scheduled notification processing
-Schedule::command('notifications:send-scheduled')->everyMinute();
-
-// Background job processing
-php artisan queue:work --sleep=3 --tries=3 --max-time=3600
-```
-
----
-
-## 🛠️ **Development & Deployment**
-
-### **Installation & Setup**
+### **1. Installation**
+Clone the repository and install dependencies.
 ```bash
-# Clone repository
-git clone https://github.com/username/awlad-elewa.git
-cd awlad-elewa
-
-# Install dependencies
+git clone <repository-url>
+cd Awlad_Elewa
 composer install
-npm install && npm run build
+npm install
+```
 
-# Environment configuration
+### **2. Environment Configuration**
+Copy the example environment file and generate the application key.
+```bash
 cp .env.example .env
 php artisan key:generate
-
-# Database setup
-php artisan migrate
-php artisan db:seed
-
-# Storage linking
-php artisan storage:link
-
-# Queue processing
-php artisan queue:work
 ```
+Update your `.env` file with database credentials and other environment-specific settings (e.g., mail server, FCM credentials).
 
-### **Environment Configuration**
-```env
-# Database
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_DATABASE=awlad_elewa
-
-# Firebase (Notifications)
-FIREBASE_CREDENTIALS=storage/app/firebase-credentials.json
-FIREBASE_PROJECT_ID=awlad-elewa
-
-# Queue Configuration
-QUEUE_CONNECTION=database
-```
-
-### **Production Deployment**
+### **3. Database Migration & Seeding**
+Run the database migrations and seeders to set up the schema and initial data.
 ```bash
-# Optimization commands
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
-# Queue supervisor setup
-supervisor configuration for queue workers
-
-# Nginx/Apache configuration
-SSL termination and load balancing setup
+php artisan migrate --seed
 ```
+
+### **4. Start the Servers**
+Use the custom `dev` script to run the PHP server, queue listener, and Vite development server concurrently.
+```bash
+composer run dev
+```
+- Your application will be available at `http://127.0.0.1:8000`.
+- The Filament admin panel is typically at `http://127.0.0.1:8000/admin`.
+
+---
+
+## 🧪 **Running Tests**
+
+The project includes a suite of tests. To run them, use the provided composer script:
+```bash
+composer test
+```
+
+---
+
+## 📚 **API Documentation**
+
+API documentation is generated using **Scribe**. To generate or update the documentation:
+```bash
+php artisan scribe:generate
+```
+This will create a `public/docs` directory with a beautiful and interactive API documentation portal. You can access it at `http://your-app-url/docs`.
 
 ---
 

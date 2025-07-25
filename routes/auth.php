@@ -1,55 +1,39 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
-// GET routes for forms
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes
+|--------------------------------------------------------------------------
+|
+| This is an admin-only system. All authentication is for admins.
+|
+*/
+
+// Admin Authentication Routes
+Route::get('/login', [AdminAuthenticatedSessionController::class, 'create'])
     ->middleware('guest')
     ->name('login');
 
-Route::get('/register', [RegisteredUserController::class, 'create'])
-    ->middleware('guest')
-    ->name('register');
-
-Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
-    ->middleware('guest')
-    ->name('password.request');
-
-Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
-    ->middleware('guest')
-    ->name('password.reset');
-
-// POST routes for form submissions
-Route::post('/register', [RegisteredUserController::class, 'store'])
-    ->middleware('guest')
-    ->name('register');
-
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+Route::post('/login', [AdminAuthenticatedSessionController::class, 'store'])
     ->middleware('guest')
     ->name('login');
 
-Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-    ->middleware('guest')
-    ->name('password.email');
-
-Route::post('/reset-password', [NewPasswordController::class, 'store'])
-    ->middleware('guest')
-    ->name('password.store');
-
-Route::get('/verify-email/{id}/{hash}', VerifyEmailController::class)
-    ->middleware(['auth', 'signed', 'throttle:6,1'])
-    ->name('verification.verify');
-
-Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-    ->middleware(['auth', 'throttle:6,1'])
-    ->name('verification.send');
-
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->middleware('auth')
+Route::post('/logout', [AdminAuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth:admin')
     ->name('logout');
+
+// Admin-specific routes (aliases for consistency)
+Route::get('/admin/login', [AdminAuthenticatedSessionController::class, 'create'])
+    ->middleware('guest')
+    ->name('admin.login');
+
+Route::post('/admin/login', [AdminAuthenticatedSessionController::class, 'store'])
+    ->middleware('guest')
+    ->name('admin.login');
+
+Route::post('/admin/logout', [AdminAuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth:admin')
+    ->name('admin.logout');

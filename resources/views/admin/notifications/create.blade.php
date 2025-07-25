@@ -81,7 +81,7 @@
                                             <option value="">اختر نوع الإرسال</option>
                                             <option value="all_users" {{ old('type') === 'all_users' ? 'selected' : '' }}>جميع المستخدمين</option>
                                             <option value="specific_users" {{ old('type') === 'specific_users' ? 'selected' : '' }}>مستخدمون محددون</option>
-                                            <option value="category_followers" {{ old('type') === 'category_followers' ? 'selected' : '' }}>متابعي فئة معينة</option>
+                                            <!-- <option value="category_followers" {{ old('type') === 'category_followers' ? 'selected' : '' }}>متابعي فئة معينة</option> -->
                                         </select>
                                         @error('type')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -100,17 +100,17 @@
                                         <small class="form-hint">اضغط Ctrl لتحديد عدة مستخدمين</small>
                                     </div>
 
-                                    <div class="mb-3" id="category-followers-section" style="display: none;">
-                                        <label class="form-label">الفئات</label>
-                                        <select name="sent_to[]" class="form-select" multiple size="6">
-                                            @foreach($categories as $category)
-                                            <option value="{{ $category->id }}" {{ in_array($category->id, old('sent_to', [])) ? 'selected' : '' }}>
-                                                {{ $category->name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        <small class="form-hint">اضغط Ctrl لتحديد عدة فئات</small>
-                                    </div>
+                                    <!-- <div class="mb-3" id="category-followers-section" style="display: none;">
+                                            <label class="form-label">الفئات</label>
+                                            <select name="sent_to[]" class="form-select" multiple size="6">
+                                                @foreach($categories as $category)
+                                                <option value="{{ $category->id }}" {{ in_array($category->id, old('sent_to', [])) ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            <small class="form-hint">اضغط Ctrl لتحديد عدة فئات</small>
+                                        </div> -->
 
                                     <div class="mb-3">
                                         <label class="form-label">جدولة الإرسال (اختيارية)</label>

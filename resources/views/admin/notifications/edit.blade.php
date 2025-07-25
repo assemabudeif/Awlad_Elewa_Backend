@@ -68,7 +68,7 @@
                                         <label class="form-label">صورة الإشعار (اختيارية)</label>
                                         @if($notification->image)
                                         <div class="mb-2">
-                                            <img src="{{ asset('storage/' . $notification->image) }}" alt="صورة الإشعار الحالية" class="img-thumbnail" style="max-width: 200px;">
+                                            <img src="{{ asset('public/storage/' . $notification->image) }}" alt="صورة الإشعار الحالية" class="img-thumbnail" style="max-width: 200px;">
                                             <div class="form-text">الصورة الحالية</div>
                                         </div>
                                         @endif
@@ -88,7 +88,7 @@
                                             <option value="">اختر نوع الإرسال</option>
                                             <option value="all_users" {{ old('type', $notification->type) === 'all_users' ? 'selected' : '' }}>جميع المستخدمين</option>
                                             <option value="specific_users" {{ old('type', $notification->type) === 'specific_users' ? 'selected' : '' }}>مستخدمون محددون</option>
-                                            <option value="category_followers" {{ old('type', $notification->type) === 'category_followers' ? 'selected' : '' }}>متابعي فئة معينة</option>
+                                            <!-- <option value="category_followers" {{ old('type', $notification->type) === 'category_followers' ? 'selected' : '' }}>متابعي فئة معينة</option> -->
                                         </select>
                                         @error('type')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -107,7 +107,7 @@
                                         <small class="form-hint">اضغط Ctrl لتحديد عدة مستخدمين</small>
                                     </div>
 
-                                    <div class="mb-3" id="category-followers-section" style="display: none;">
+                                    <!-- <div class="mb-3" id="category-followers-section" style="display: none;">
                                         <label class="form-label">الفئات</label>
                                         <select name="sent_to[]" class="form-select" multiple size="6">
                                             @foreach($categories as $category)
@@ -117,7 +117,7 @@
                                             @endforeach
                                         </select>
                                         <small class="form-hint">اضغط Ctrl لتحديد عدة فئات</small>
-                                    </div>
+                                    </div> -->
 
                                     <div class="mb-3">
                                         <label class="form-label">جدولة الإرسال (اختيارية)</label>

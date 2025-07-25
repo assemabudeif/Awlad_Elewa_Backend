@@ -76,7 +76,7 @@
                     </div>
                     <div class="mb-3">
                         <div id="imagePreview" class="{{ $product->image ? '' : 'd-none' }}">
-                            <img id="preview" src="{{ $product->image ? asset('storage/' . $product->image) : '' }}" alt="معاينة الصورة" class="img-fluid rounded" style="max-height: 200px;">
+                            <img id="preview" src="{{ $product->image ? asset('public/storage/' . $product->image) : '' }}" alt="معاينة الصورة" class="img-fluid rounded" style="max-height: 200px;">
                         </div>
                     </div>
                 </div>

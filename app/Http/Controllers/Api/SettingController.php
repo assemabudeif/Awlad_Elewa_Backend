@@ -15,8 +15,17 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $settings = Setting::paginate(15);
-        return SettingResource::collection($settings);
+        $settings = Setting::all();
+        if ($settings->isEmpty()) {
+            return response()->json(['message' => 'No settings found'], 404);
+        }
+
+        $data = [];
+        foreach ($settings as $setting) {
+            $data[$setting->key] = $setting->value;
+        }
+
+        return response()->json($data);
     }
 
     /**

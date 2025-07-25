@@ -28,7 +28,7 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'phone1' => ['required', 'string', 'max:20'],
             'phone2' => ['nullable', 'string', 'max:20'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', Rules\Password::defaults()],
         ]);
         $user = User::create([
             'name' => $request->name,
@@ -65,6 +65,19 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        if (!Auth::check()) {
+            return response()->json(['message' => 'User not authenticated'], 401);
+        }
+        // Clear the FCM token for the user
+        $request->user()->update(['fcm_token' => null]);
+
+        // Revoke the user's current access token
+        // This will log the user out by deleting the token
+        if (!$request->user() || !$request->user()->currentAccessToken()) {
+            return response()->json(['message' => 'No active session found'], 404);
+        }
+        // Delete the current access token
+        // This will log the user out by deleting the token
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'Logged out successfully']);
     }
@@ -84,14 +97,6 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             // Log the error for debugging
             Log::error('Password reset email error: ' . $e->getMessage());
-
-            // Check if it's a Mailtrap domain restriction error
-            if (str_contains($e->getMessage(), 'Sending from domain') && str_contains($e->getMessage(), 'is not allowed')) {
-                return response()->json([
-                    'message' => 'Password reset link generated but email configuration needs to be updated. Please contact support.',
-                    'error' => 'Email configuration issue'
-                ], 500);
-            }
 
             return response()->json([
                 'message' => 'Unable to send reset link. Please try again later.',

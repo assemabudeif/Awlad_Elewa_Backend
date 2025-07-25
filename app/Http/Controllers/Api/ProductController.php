@@ -14,9 +14,23 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('category')->paginate(15);
+        $query = Product::with('category');
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('description', 'like', '%' . $searchTerm . '%')
+                  ->orWhereHas('category', function ($categoryQuery) use ($searchTerm) {
+                      $categoryQuery->where('name', 'like', '%' . $searchTerm . '%');
+                  });
+            });
+        }
+
+        $products = $query->paginate(15);
+
         return ProductResource::collection($products);
     }
 

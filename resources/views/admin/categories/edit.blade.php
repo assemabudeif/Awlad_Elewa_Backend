@@ -35,7 +35,7 @@
                 <div class="mb-3">
                     <label class="form-label">الصورة الحالية:</label>
                     <div class="border rounded p-3 text-center">
-                        <img src="{{ $category->icon_url }}"
+                        <img src="{{ asset('public/storage/'.$category->icon) }}"
                             alt="{{ $category->name }}"
                             class="img-thumbnail"
                             style="max-width: 150px; max-height: 150px; object-fit: cover;">
