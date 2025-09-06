@@ -77,7 +77,7 @@
 
                 <div class="col-md-4">
                     <div class="mb-3">
-                        <label for="image" class="form-label">صورة المنتج</label>
+                        <label for="image" class="form-label">الصورة الرئيسية</label>
                         <input type="file" class="form-control @error('image') is-invalid @enderror"
                             id="image" name="image" accept="image/*">
                         <div class="form-text">الأبعاد الموصى بها: 800x600 بكسل</div>
@@ -90,6 +90,26 @@
                         <div id="imagePreview" class="d-none">
                             <img id="preview" src="" alt="معاينة الصورة"
                                 class="img-fluid rounded" style="max-height: 200px;">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="images" class="form-label">صور إضافية</label>
+                        <input type="file" class="form-control @error('images') is-invalid @enderror"
+                            id="images" name="images[]" accept="image/*" multiple>
+                        <div class="form-text">يمكنك اختيار عدة صور في نفس الوقت</div>
+                        @error('images')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        @error('images.*')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <div id="imagesPreview" class="d-none">
+                            <h6>معاينة الصور الإضافية:</h6>
+                            <div id="previewContainer" class="row g-2"></div>
                         </div>
                     </div>
                 </div>
@@ -110,6 +130,7 @@
 
 @push('scripts')
 <script>
+    // Main image preview
     document.getElementById('image').addEventListener('change', function(e) {
         const file = e.target.files[0];
         const preview = document.getElementById('preview');
@@ -122,6 +143,39 @@
                 previewDiv.classList.remove('d-none');
             }
             reader.readAsDataURL(file);
+        } else {
+            previewDiv.classList.add('d-none');
+        }
+    });
+
+    // Multiple images preview
+    document.getElementById('images').addEventListener('change', function(e) {
+        const files = Array.from(e.target.files);
+        const previewDiv = document.getElementById('imagesPreview');
+        const container = document.getElementById('previewContainer');
+
+        // Clear previous previews
+        container.innerHTML = '';
+
+        if (files.length > 0) {
+            previewDiv.classList.remove('d-none');
+
+            files.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const col = document.createElement('div');
+                    col.className = 'col-6 col-md-4';
+                    col.innerHTML = `
+                        <div class="position-relative">
+                            <img src="${e.target.result}" alt="معاينة ${index + 1}" 
+                                 class="img-fluid rounded" style="height: 100px; width: 100%; object-fit: cover;">
+                            <small class="text-muted d-block text-center mt-1">صورة ${index + 1}</small>
+                        </div>
+                    `;
+                    container.appendChild(col);
+                };
+                reader.readAsDataURL(file);
+            });
         } else {
             previewDiv.classList.add('d-none');
         }

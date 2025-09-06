@@ -67,7 +67,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="mb-3">
-                        <label for="image" class="form-label">صورة المنتج</label>
+                        <label for="image" class="form-label">الصورة الرئيسية</label>
                         <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
                         <div class="form-text">الأبعاد الموصى بها: 800x600 بكسل</div>
                         @error('image')
@@ -79,9 +79,68 @@
                             <img id="preview" src="{{ $product->image ? asset('public/storage/' . $product->image) : '' }}" alt="معاينة الصورة" class="img-fluid rounded" style="max-height: 200px;">
                         </div>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="images" class="form-label">صور إضافية جديدة</label>
+                        <input type="file" class="form-control @error('images') is-invalid @enderror"
+                            id="images" name="images[]" accept="image/*" multiple>
+                        <div class="form-text">يمكنك اختيار عدة صور في نفس الوقت (ستستبدل الصور الحالية)</div>
+                        @error('images')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        @error('images.*')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <div id="imagesPreview" class="d-none">
+                            <h6>معاينة الصور الجديدة:</h6>
+                            <div id="previewContainer" class="row g-2"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-end gap-2">
+
+            @if($product->images->count() > 0)
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-images"></i> الصور الحالية</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                @foreach($product->images as $image)
+                                <div class="col-md-3 col-sm-4 col-6">
+                                    <div class="position-relative">
+                                        <img src="{{ asset('public/storage/' . $image->image_path) }}"
+                                            alt="صورة المنتج"
+                                            class="img-fluid rounded"
+                                            style="height: 120px; width: 100%; object-fit: cover;">
+                                        <div class="position-absolute top-0 end-0 p-1">
+                                            <form action="{{ route('admin.products.remove-image', ['product' => $product, 'image' => $image]) }}"
+                                                method="POST" class="d-inline"
+                                                onsubmit="return confirm('هل أنت متأكد من حذف هذه الصورة؟')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <small class="text-muted d-block text-center mt-1">ترتيب: {{ $image->sort_order + 1 }}</small>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            <div class="d-flex justify-content-end gap-2 mt-4">
                 <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">
                     <i class="fas fa-times"></i> إلغاء
                 </a>
@@ -96,6 +155,7 @@
 
 @push('scripts')
 <script>
+    // Main image preview
     document.getElementById('image').addEventListener('change', function(e) {
         const file = e.target.files[0];
         const preview = document.getElementById('preview');
@@ -107,6 +167,39 @@
                 previewDiv.classList.remove('d-none');
             }
             reader.readAsDataURL(file);
+        } else {
+            previewDiv.classList.add('d-none');
+        }
+    });
+
+    // Multiple images preview
+    document.getElementById('images').addEventListener('change', function(e) {
+        const files = Array.from(e.target.files);
+        const previewDiv = document.getElementById('imagesPreview');
+        const container = document.getElementById('previewContainer');
+
+        // Clear previous previews
+        container.innerHTML = '';
+
+        if (files.length > 0) {
+            previewDiv.classList.remove('d-none');
+
+            files.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const col = document.createElement('div');
+                    col.className = 'col-6 col-md-4';
+                    col.innerHTML = `
+                        <div class="position-relative">
+                            <img src="${e.target.result}" alt="معاينة ${index + 1}" 
+                                 class="img-fluid rounded" style="height: 100px; width: 100%; object-fit: cover;">
+                            <small class="text-muted d-block text-center mt-1">صورة ${index + 1}</small>
+                        </div>
+                    `;
+                    container.appendChild(col);
+                };
+                reader.readAsDataURL(file);
+            });
         } else {
             previewDiv.classList.add('d-none');
         }

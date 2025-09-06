@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\{User, Category, Product, Banner, Order, OrderItem, RepairOrder, Notification, Setting};
+use App\Models\{User, Category, Product, ProductImage, Banner, Order, OrderItem, RepairOrder, Notification, Setting};
 use Illuminate\Support\Facades\{Hash, Schema, DB};
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
@@ -216,6 +216,17 @@ class DemoDataSeeder extends Seeder
                 'category_id' => $categories[$productData['category']]->id,
                 'image' => $productImages[$index] ?? $productImages[rand(0, count($productImages) - 1)],
             ]);
+
+            // Add 2-4 additional images for each product
+            $additionalImagesCount = rand(2, 4);
+            for ($i = 0; $i < $additionalImagesCount; $i++) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image_path' => $productImages[rand(0, count($productImages) - 1)],
+                    'sort_order' => $i,
+                ]);
+            }
+
             $products->push($product);
         }
 

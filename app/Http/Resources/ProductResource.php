@@ -21,6 +21,13 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'category_id' => $this->category_id,
             'image' => $this->image,
+            'images' => $this->images->map(function ($image) {
+                return [
+                    'id' => $image->id,
+                    'image_path' => $image->image_path,
+                    'sort_order' => $image->sort_order,
+                ];
+            }),
         ];
     }
 }

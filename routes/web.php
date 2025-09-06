@@ -41,6 +41,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
 
     // Products
     Route::resource('products', ProductController::class);
+    Route::post('products/{product}/images', [ProductController::class, 'addImages'])->name('products.add-images');
+    Route::delete('products/{product}/images/{image}', [ProductController::class, 'removeImage'])->name('products.remove-image');
 
     // Orders
     Route::resource('orders', OrderController::class);

@@ -37,6 +37,8 @@ Route::middleware(\App\Http\Middleware\ForceJsonResponse::class)->group(function
     Route::get('/categories/{category}/products', [CategoryController::class, 'products']);
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{product}', [ProductController::class, 'show']);
+    Route::post('/products/{product}/images', [ProductController::class, 'addImages']);
+    Route::delete('/products/{product}/images/{image}', [ProductController::class, 'removeImage']);
     Route::get('/banners', [BannerController::class, 'index']);
     Route::get('/settings', [SettingController::class, 'index']);
 

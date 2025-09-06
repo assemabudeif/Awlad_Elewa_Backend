@@ -23,10 +23,11 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>الصورة</th>
+                        <th>الصور</th>
                         <th>الاسم</th>
                         <th>الفئة</th>
                         <th>السعر</th>
+                        <th>عدد الصور</th>
                         <th>تاريخ الإنشاء</th>
                         <th>الإجراءات</th>
                     </tr>
@@ -36,17 +37,33 @@
                     <tr>
                         <td>{{ $product->id }}</td>
                         <td>
-                            @if($product->image)
-                            <img src="{{ asset('public/storage/' . $product->image) }}"
-                                alt="{{ $product->name }}"
-                                class="img-thumbnail"
-                                style="width: 50px; height: 50px; object-fit: cover;">
-                            @else
-                            <div class="bg-light d-flex align-items-center justify-content-center"
-                                style="width: 50px; height: 50px;">
-                                <i class="fas fa-image text-muted"></i>
+                            <div class="d-flex align-items-center">
+                                @if($product->image)
+                                <img src="{{ asset('public/storage/' . $product->image) }}"
+                                    alt="{{ $product->name }}"
+                                    class="img-thumbnail me-2"
+                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                @else
+                                <div class="bg-light d-flex align-items-center justify-content-center me-2"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="fas fa-image text-muted"></i>
+                                </div>
+                                @endif
+
+                                @if($product->images->count() > 0)
+                                <div class="position-relative">
+                                    <img src="{{ asset('public/storage/' . $product->images->first()->image_path) }}"
+                                        alt="صورة إضافية"
+                                        class="img-thumbnail"
+                                        style="width: 30px; height: 30px; object-fit: cover;">
+                                    @if($product->images->count() > 1)
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                                        +{{ $product->images->count() - 1 }}
+                                    </span>
+                                    @endif
+                                </div>
+                                @endif
                             </div>
-                            @endif
                         </td>
                         <td>
                             <strong>{{ $product->name }}</strong>
@@ -59,6 +76,11 @@
                         </td>
                         <td>
                             <strong class="text-success">{{ number_format($product->price, 2) }} ج.م</strong>
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary">
+                                {{ $product->images->count() + ($product->image ? 1 : 0) }}
+                            </span>
                         </td>
                         <td>{{ $product->created_at->format('Y-m-d') }}</td>
                         <td>
